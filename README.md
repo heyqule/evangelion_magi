@@ -32,3 +32,9 @@ MIT
 
 ### Screenshot
 ![main.png](main.png)
+
+#### Select new AI model
+![model_selection.png](model_selection.png)
+
+#### Report on full content and reasoning for each model.
+![report.png](report.png)

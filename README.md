@@ -30,6 +30,16 @@ MIT
 6. Wait for the responses.
 7. Click report for full content and reasoning.
 
+### Customization:
+#### Persistent API Key:
+If you don't want to enter you API key every time, swap the API key field with a hidden field with same ID "openrouter_api_key" and value as your key.
+
+#### Customize model list:
+You can customize the AI models list by changing the support_models variable in the javascript section.
+
+#### Customize default role for each AI.
+You can change the default value from input with id, bottom-right-system-prompt, bottom-left-system-prompt and top-system-prompt
+
 ### Screenshot
 ![main.png](main.png)
 

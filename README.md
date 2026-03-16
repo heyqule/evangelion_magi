@@ -2,7 +2,10 @@
 
 OK. I vibe code this for lol.  
 
-It utilizes openrouter API to make its YES / NO decisions.  
+It utilizes openrouter API to make its YES / NO decisions.  Once all models have responded, it then decides the final "Accept" or "Reject".
+
+### License
+MIT
 
 ### Free AI Models
 - nvidia/nemotron-3-super-120b-a12b:free
@@ -10,7 +13,7 @@ It utilizes openrouter API to make its YES / NO decisions.
 - openrouter/hunter-alpha (free)
 
 ### Requirement:
-OpenRouter API Key
+[Get an OpenRouter API Key](https://openrouter.ai/settings/keys)
 
 ### Usage:
 1. Enter the API key
@@ -20,7 +23,7 @@ OpenRouter API Key
 5. Wait for the responses.
 
 ### Advance Usage:
-Model reasoning are logged in dev console.
+Model reasoning is logged in dev console.
 
 ### Screenshot
 ![main.png](main.png)

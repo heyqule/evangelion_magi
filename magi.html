@@ -169,11 +169,209 @@
     padding: 1px 4px;
     width: 160px;
   }
+
+  /* ── Custom MAGI Alert Modal ── */
+  .magi-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(3,12,10,0.82);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+  }
+  .magi-overlay.active { display: flex; }
+
+  .magi-alert {
+    background: #040E0C;
+    border: 3px solid #CC8800;
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    animation: alertAppear 0.12s ease-out;
+  }
+  @keyframes alertAppear {
+    from { opacity: 0; transform: scaleY(0.85); }
+    to   { opacity: 1; transform: scaleY(1); }
+  }
+  .magi-alert-header {
+    border-bottom: 2px solid #CC8800;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .magi-alert-title {
+    color: #FFAA00;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-family: 'Courier New', monospace;
+  }
+  .magi-alert-code {
+    color: #7A4400;
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+  }
+  .magi-alert-body {
+    padding: 18px 20px 14px;
+    color: #FF8800;
+    font-size: 12.5px;
+    font-family: 'Courier New', monospace;
+    line-height: 1.7;
+    border-bottom: 2px solid #CC8800;
+    min-height: 60px;
+  }
+  .magi-alert-body::before {
+    content: '> ';
+    color: #CC8800;
+  }
+  .magi-alert-footer {
+    padding: 8px 14px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .magi-alert-btn {
+    background: #CC8800;
+    color: #040E0C;
+    border: none;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 22px;
+    cursor: pointer;
+    letter-spacing: 3px;
+  }
+  .magi-alert-btn:active {
+    background: #7A4400;
+    color: #FFAA00;
+  }
+  /* ── Full UI scanline overlay ── */
+  .magi-scanline {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,0.13) 3px,
+      rgba(0,0,0,0.13) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .magi-alert-scanline {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,0.08) 3px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+  }
+  /* ── Report Modal ── */
+  .magi-report {
+    background: #040E0C;
+    border: 3px solid #CC8800;
+    width: 680px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    animation: alertAppear 0.12s ease-out;
+  }
+  .magi-report-header {
+    border-bottom: 2px solid #CC8800;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .magi-report-body {
+    overflow-y: auto;
+    padding: 16px 20px;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: #CC8800 #040E0C;
+  }
+  .magi-report-body::-webkit-scrollbar { width: 6px; }
+  .magi-report-body::-webkit-scrollbar-track { background: #040E0C; }
+  .magi-report-body::-webkit-scrollbar-thumb { background: #CC8800; }
+
+  .report-entry {
+    margin-bottom: 22px;
+    border-left: 3px solid #CC8800;
+    padding-left: 14px;
+  }
+  .report-entry-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .report-model-name {
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFAA00;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+  }
+  .report-role {
+    font-size: 10px;
+    color: #7A4400;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+  }
+  .report-verdict {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    padding: 1px 8px;
+    border: 1px solid;
+  }
+  .report-verdict.yes { color: #00cc66; border-color: #00cc66; }
+  .report-verdict.no  { color: #ff3333; border-color: #ff3333; }
+  .report-verdict.unk { color: #666;    border-color: #666; }
+
+  .report-section-label {
+    font-size: 9.5px;
+    color: #CC8800;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 4px;
+    margin-top: 10px;
+  }
+  .report-text {
+    font-size: 11px;
+    color: #FF8800;
+    font-family: 'Courier New', monospace;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .report-text.reasoning {
+    color: #886622;
+  }
+  .report-divider {
+    border: none;
+    border-top: 1px solid #2A1A00;
+    margin: 4px 0 18px;
+  }
 </style>
 </head>
 <body>
 
 <div class="magi-frame">
+
+  <div class="magi-scanline"></div>
 
   <!-- Header -->
   <div class="magi-header">
@@ -210,7 +408,6 @@
         <input id="top-system-prompt" class="panel-input" xmlns="http://www.w3.org/1999/xhtml"
           type="text" value="accountant"/>
       </foreignObject>
-
       <!-- ── CASPER (reverted — original correct pentagon, bottom-left) ── -->
       <polygon id="panel-bottom-left"
         points="0,190 156,190 276,235 276,350 0,350"
@@ -224,7 +421,6 @@
         <input id="bottom-left-system-prompt" class="panel-input" xmlns="http://www.w3.org/1999/xhtml"
           type="text" value="politician"/>
       </foreignObject>
-
       <!-- ── MELCHIOR (reverted — original correct pentagon, bottom-right) ── -->
       <polygon id="panel-bottom-right"
         points="524,235 644,190 800,190 800,350 524,350"
@@ -238,7 +434,6 @@
         <input id="bottom-right-system-prompt" class="panel-input" xmlns="http://www.w3.org/1999/xhtml"
           type="text" value="merchant"/>
       </foreignObject>
-
       <!-- ══ 3 CONNECTOR LINES — one per panel pair ══ -->
       <!-- BALTHASAR ↔ CASPER -->
       <line x1="262" y1="147" x2="230" y2="218" stroke="#CC8800" stroke-width="10" stroke-linecap="butt"></line>
@@ -268,15 +463,76 @@
     </div>
     <div class="footer-row">
       <span class="footer-label">Question:</span>
-      <textarea id="question" class="question-textarea" placeholder="Should one follow emotions instead of..."></textarea>
+      <textarea id="question" class="question-textarea" placeholder="Describe your case, then end with a boolean question..."></textarea>
     </div>
     <button id="submit-btn" class="submit-btn">SUBMIT</button>
+    <button id="report-btn" class="submit-btn" style="display:none; background:#040E0C; color:#CC8800; margin-top:0;">VIEW REPORT</button>
   </div>
 
 </div>
 
+<!-- MAGI Custom Alert Modal -->
+<div class="magi-overlay" id="magi-overlay">
+  <div class="magi-alert" id="magi-alert">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-alert-header">
+      <span class="magi-alert-title">// SYSTEM ALERT</span>
+      <span class="magi-alert-code">ERR:MAGI_SYS</span>
+    </div>
+    <div class="magi-alert-body" id="magi-alert-msg">Message here.</div>
+    <div class="magi-alert-footer">
+      <button class="magi-alert-btn" id="magi-alert-ok">CONFIRM</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAGI Report Modal -->
+<div class="magi-overlay" id="report-overlay">
+  <div class="magi-report">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-report-header">
+      <span class="magi-alert-title">// DELIBERATION REPORT</span>
+      <span class="magi-alert-code" id="report-verdict-code">MAGI_SYS</span>
+    </div>
+    <div class="magi-report-body" id="report-body"></div>
+    <div class="magi-alert-footer">
+      <button class="magi-alert-btn" id="report-close-btn">CLOSE</button>
+    </div>
+  </div>
+</div>
 
 <script>
+  const magiAlert = (msg) => {
+    document.getElementById('magi-alert-msg').textContent = msg;
+    document.getElementById('magi-overlay').classList.add('active');
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('magi-alert-ok').addEventListener('click', () => {
+      document.getElementById('magi-overlay').classList.remove('active');
+    });
+    document.getElementById('magi-overlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('magi-overlay')) {
+        document.getElementById('magi-overlay').classList.remove('active');
+      }
+    });
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      document.getElementById('report-btn').style.display = 'none';
+      makeOpenRouterApiCall();
+    });
+    document.getElementById('report-btn').addEventListener('click', () => {
+      document.getElementById('report-overlay').classList.add('active');
+    });
+    document.getElementById('report-close-btn').addEventListener('click', () => {
+      document.getElementById('report-overlay').classList.remove('active');
+    });
+    document.getElementById('report-overlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('report-overlay')) {
+        document.getElementById('report-overlay').classList.remove('active');
+      }
+    });
+  });
+
   const normalizeResponse = (response) => {
     if (!response) return '';
     return response.substring(0, 3).trim().toLowerCase();
@@ -304,15 +560,15 @@
     }
   };
 
-  const makeOpenRouterApiCall = async () => {
+  const makeOpenRouterApiCall = () => {
     const apiKey = document.getElementById('openrouter_api_key').value;
     const question = document.getElementById('question').value;
     const topSystemPrompt = document.getElementById('top-system-prompt').value || 'accountant';
     const bottomLeftSystemPrompt = document.getElementById('bottom-left-system-prompt').value || 'politician';
     const bottomRightSystemPrompt = document.getElementById('bottom-right-system-prompt').value || 'merchant';
 
-    if (!apiKey) { alert('API key not provided'); return; }
-    if (!question) { alert('Question not provided'); return; }
+    if (!apiKey) { magiAlert('API key not provided'); return; }
+    if (!question) { magiAlert('Question not provided'); return; }
 
     const youare = 'You are ';
     const globalSystemPrompt = `.
@@ -342,47 +598,101 @@ YOU MUST FOLLOW MY GUIDELINES:
       })
     }).then(r => r.json());
 
-    const [top_data, bottom_left_data, bottom_right_data] = await Promise.all([
-      makeCall('nvidia/nemotron-3-super-120b-a12b:free', topSystemPrompt),
-      makeCall('stepfun/step-3.5-flash:free', bottomLeftSystemPrompt),
-      makeCall('openrouter/hunter-alpha', bottomRightSystemPrompt),
-    ]);
-
     const getContent = (data) => data?.choices?.[0]?.message?.content || '';
+    const getReasoning = (data) => data?.choices?.[0]?.message?.reasoning || '';
 
-    const topContent = getContent(top_data);
-    const leftContent = getContent(bottom_left_data);
-    const rightContent = getContent(bottom_right_data);
+    const results = { top: null, left: null, right: null };
+    const reasoning = { top: '', left: '', right: '' };
+    const roles = {
+      top: { model: 'Nemotron 3·120B', role: topSystemPrompt },
+      left: { model: 'StepFun·3.5 Flash', role: bottomLeftSystemPrompt },
+      right: { model: 'Hunter·Alpha', role: bottomRightSystemPrompt },
+    };
 
-    console.log('TOP:', topContent);
-    console.log('BOTTOM LEFT:', leftContent);
-    console.log('BOTTOM RIGHT:', rightContent);
+    const buildReport = () => {
+      const body = document.getElementById('report-body');
+      body.innerHTML = '';
+      const entries = [
+        { key: 'top', ...roles.top, content: results.top, reason: reasoning.top },
+        { key: 'left', ...roles.left, content: results.left, reason: reasoning.left },
+        { key: 'right', ...roles.right, content: results.right, reason: reasoning.right },
+      ];
+      entries.forEach((e, i) => {
+        const norm = normalizeResponse(e.content);
+        const verdict = norm.includes('yes') ? 'YES' : norm.includes('no') ? 'NO' : '???';
+        const cls = norm.includes('yes') ? 'yes' : norm.includes('no') ? 'no' : 'unk';
+        const div = document.createElement('div');
+        div.className = 'report-entry';
+        div.innerHTML = `
+          <div class="report-entry-header">
+            <span class="report-model-name">${e.model}</span>
+            <span class="report-role">as ${e.role}</span>
+            <span class="report-verdict ${cls}">${verdict}</span>
+          </div>
+          <div class="report-section-label">RESPONSE</div>
+          <div class="report-text">${(e.content || '(no response)').trim()}</div>
+          ${e.reason ? `<div class="report-section-label">REASONING</div><div class="report-text reasoning">${e.reason.trim()}</div>` : ''}
+        `;
+        body.appendChild(div);
+        if (i < entries.length - 1) {
+          const hr = document.createElement('hr');
+          hr.className = 'report-divider';
+          body.appendChild(hr);
+        }
+      });
+    };
 
-    updatePanelColor('panel-top', topContent);
-    updatePanelColor('panel-bottom-left', leftContent);
-    updatePanelColor('panel-bottom-right', rightContent);
+    const checkAllDone = () => {
+      if (results.top === null || results.left === null || results.right === null) return;
+      const responses = [results.top, results.left, results.right];
+      let yesCount = 0, noCount = 0;
+      responses.forEach(r => {
+        const n = normalizeResponse(r);
+        if (n.includes('yes')) yesCount++;
+        else if (n.includes('no')) noCount++;
+      });
+      if (yesCount > noCount) {
+        updateStatusDisplay('同 意', '#00cc66', '#00cc66');
+      } else if (noCount > yesCount) {
+        updateStatusDisplay('否 定', '#ff3333', '#ff3333');
+      } else {
+        magiAlert('Votes are equal. One or more AI did not return a Yes/No answer.');
+        updateStatusDisplay('誤 差', '#666', '#666');
+      }
+      buildReport();
+      document.getElementById('report-btn').style.display = 'block';
+    };
 
-    const responses = [topContent, leftContent, rightContent];
-    let yesCount = 0, noCount = 0;
-    responses.forEach(r => {
-      const n = normalizeResponse(r);
-      if (n.includes('yes')) yesCount++;
-      else if (n.includes('no')) noCount++;
+    makeCall('nvidia/nemotron-3-super-120b-a12b:free', topSystemPrompt).then(data => {
+      const content = getContent(data);
+      console.log('TOP:', content);
+      console.log('TOP reasoning:', data?.choices?.[0]?.message?.reasoning);
+      results.top = content;
+      reasoning.top = getReasoning(data);
+      updatePanelColor('panel-top', content);
+      checkAllDone();
     });
 
-    if (yesCount > noCount) {
-      updateStatusDisplay('同 意', '#00cc66', '#00cc66');
-    } else if (noCount > yesCount) {
-      updateStatusDisplay('否 定', '#ff3333', '#ff3333');
-    } else {
-      console.error('Votes are equal. One or more AI did not return a Yes/No answer.');
-      updateStatusDisplay('誤 差', '#666', '#666');
-    }
-  };
+    makeCall('stepfun/step-3.5-flash:free', bottomLeftSystemPrompt).then(data => {
+      const content = getContent(data);
+      console.log('BOTTOM LEFT:', content);
+      console.log('BOTTOM LEFT reasoning:', data?.choices?.[0]?.message?.reasoning);
+      results.left = content;
+      reasoning.left = getReasoning(data);
+      updatePanelColor('panel-bottom-left', content);
+      checkAllDone();
+    });
 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('submit-btn').addEventListener('click', makeOpenRouterApiCall);
-  });
+    makeCall('openrouter/hunter-alpha', bottomRightSystemPrompt).then(data => {
+      const content = getContent(data);
+      console.log('BOTTOM RIGHT:', content);
+      console.log('BOTTOM RIGHT reasoning:', data?.choices?.[0]?.message?.reasoning);
+      results.right = content;
+      reasoning.right = getReasoning(data);
+      updatePanelColor('panel-bottom-right', content);
+      checkAllDone();
+    });
+  };
 </script>
 </body>
 </html>

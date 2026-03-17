@@ -1,0 +1,383 @@
+|D:\eva_magi\style.css
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #030C0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── Outer frame ── */
+.magi-frame {
+  width: 800px;
+  background: #040E0C;
+  border: 4px solid #CC8800;
+  box-sizing: content-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.magi-header {
+  height: 58px;
+  border-bottom: 3px solid #CC8800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  flex-shrink: 0;
+}
+.header-kanji {
+  font-size: 36px;
+  font-weight: 900;
+  color: #FFAA00;
+  letter-spacing: 12px;
+  font-family: 'MS Gothic','Yu Gothic','Hiragino Kaku Gothic Pro','Noto Sans JP',sans-serif;
+}
+
+/* ── Content: 800 × 348 ── */
+.magi-content {
+  width: 800px;
+  height: 348px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── System info ── */
+.sys-info {
+  position: absolute;
+  top: 10px; left: 16px;
+  color: #FF8800;
+  font-size: 11.5px;
+  line-height: 1.6;
+  z-index: 30;
+  pointer-events: none;
+  font-family: 'Courier New', monospace;
+}
+.sys-info .code-line { font-size: 13px; font-weight: bold; }
+
+/* ── 情報 box ── */
+.joho {
+  position: absolute;
+  top: 10px; right: 16px;
+  border: 2px solid #CC8800;
+  color: #CC8800;
+  font-size: 19px;
+  letter-spacing: 8px;
+  padding: 3px 14px 3px 18px;
+  z-index: 30;
+  font-family: 'MS Gothic','Yu Gothic','Hiragino Kaku Gothic Pro','Noto Sans JP',sans-serif;
+}
+
+/* ── Full-content SVG for panels + connector ── */
+.panels-svg {
+  position: absolute;
+  inset: 0;
+  width: 800px;
+  height: 348px;
+}
+
+/* ── Footer ── */
+.magi-footer {
+  border-top: 3px solid #CC8800;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 14px;
+  gap: 5px;
+  flex-shrink: 0;
+  background: #040E0C;
+}
+.footer-row {
+  display: flex;
+  align-items: center;
+}
+.footer-label {
+  color: #CC8800;
+  font-size: 11.5px;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  width: 140px;
+  flex-shrink: 0;
+}
+.question-input {
+  background: #080F0E;
+  border: 1px solid #CC8800;
+  color: #CC8800;
+  font-size: 16px;
+  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  flex: 1;
+  height: 26px;
+  outline: none;
+  resize: none;
+}
+.question-textarea {
+  background: #080F0E;
+  border: 1px solid #CC8800;
+  color: #CC8800;
+  font-size: 16px;
+  padding: 4px 6px;
+  font-family: 'Courier New', monospace;
+  flex: 1;
+  min-height: 100px;
+  outline: none;
+  resize: none;
+}
+.question-input::placeholder,
+.question-textarea::placeholder {
+  color: #7A4400;
+}
+.submit-btn {
+  background: #CC8800;
+  color: #040E0C;
+  border: 1px solid #CC8800;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 20px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  margin-left: 140px;
+  margin-top: 2px;
+}
+.submit-btn:hover { background: #CC8800; }
+.submit-btn:active {
+  background: #7A4400;
+  color: #FFAA00;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+}
+.panel-input {
+  background: rgba(4,14,12,0.75);
+  border: 1px solid #CC8800;
+  color: #FFAA00;
+  font-size: 16px;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  outline: none;
+  padding: 1px 4px;
+  width: 160px;
+}
+.panel-select {
+  background: transparent;
+  border: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 900;
+  font-family: 'Arial Black', Impact, Arial, sans-serif;
+  text-align: center;
+  outline: none;
+  padding: 2px 2px;
+  width: 100%;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  letter-spacing: 0.5px;
+}
+.panel-select option {
+  background: #040E0C;
+  color: #FFAA00;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* ── Custom MAGI Alert Modal ── */
+.magi-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(3,12,10,0.82);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+.magi-overlay.active { display: flex; }
+
+.magi-alert {
+  background: #040E0C;
+  border: 3px solid #CC8800;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: alertAppear 0.12s ease-out;
+}
+@keyframes alertAppear {
+  from { opacity: 0; transform: scaleY(0.85); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+.magi-alert-header {
+  border-bottom: 2px solid #CC8800;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.magi-alert-title {
+  color: #FFAA00;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  font-family: 'Courier New', monospace;
+}
+.magi-alert-code {
+  color: #7A4400;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+.magi-alert-body {
+  padding: 18px 20px 14px;
+  color: #FF8800;
+  font-size: 12.5px;
+  font-family: 'Courier New', monospace;
+  line-height: 1.7;
+  border-bottom: 2px solid #CC8800;
+  min-height: 60px;
+}
+.magi-alert-body::before {
+  content: '> ';
+  color: #CC8800;
+}
+.magi-alert-footer {
+  padding: 8px 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+.magi-alert-btn {
+  background: #CC8800;
+  color: #040E0C;
+  border: none;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 4px 22px;
+  cursor: pointer;
+  letter-spacing: 3px;
+}
+.magi-alert-btn:active {
+  background: #7A4400;
+  color: #FFAA00;
+}
+/* ── Full UI scanline overlay ── */
+.magi-scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.13) 3px,
+    rgba(0,0,0,0.13) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+.magi-alert-scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+}
+/* ── Report Modal ── */
+.magi-report {
+  background: #040E0C;
+  border: 3px solid #CC8800;
+  width: 680px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: alertAppear 0.12s ease-out;
+}
+.magi-report-header {
+  border-bottom: 2px solid #CC8800;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.magi-report-body {
+  overflow-y: auto;
+  padding: 16px 20px;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #CC8800 #040E0C;
+}
+.magi-report-body::-webkit-scrollbar { width: 6px; }
+.magi-report-body::-webkit-scrollbar-track { background: #040E0C; }
+.magi-report-body::-webkit-scrollbar-thumb { background: #CC8800; }
+
+.report-entry {
+  margin-bottom: 22px;
+  border-left: 3px solid #CC8800;
+  padding-left: 14px;
+}
+.report-entry-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.report-model-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #FFAA00;
+  letter-spacing: 2px;
+  font-family: 'Courier New', monospace;
+}
+.report-role {
+  font-size: 10px;
+  color: #FFAA00;
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+}
+.report-verdict {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-family: 'Courier New', monospace;
+  padding: 1px 8px;
+  border: 1px solid;
+}
+.report-verdict.yes { color: #00cc66; border-color: #00cc66; }
+.report-verdict.no  { color: #ff3333; border-color: #ff3333; }
+.report-verdict.unk { color: #999;    border-color: #999; }
+
+.report-section-label {
+  font-size: 9.5px;
+  color: #CC8800;
+  letter-spacing: 2px;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+.report-text {
+  font-size: 11px;
+  color: #FF8800;
+  font-family: 'Courier New', monospace;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.report-text.reasoning {
+  color: #CC8833;
+}
+.report-divider {
+  border: none;
+  border-top: 1px solid #2A1A00;
+  margin: 4px 0 18px;
+}

@@ -608,9 +608,9 @@
 
   // ── Per-panel configuration state ──
   const panelConfig = {
-    top:   { model: support_models[4].name, role: 'a mother',    goals: 'protect your children and ensure their well-being' },
-    left:  { model: support_models[1].name, role: 'a woman',     goals: 'pursue love, dreams and desires' },
-    right: { model: support_models[2].name, role: 'a scientist', goals: 'further our understanding of the universe and advance our technological progress' },
+    top:   { model: support_models[1].name, role: 'a mother',    goals: 'nurturing, emotional and protective. Prioritize the well-being of her children.' },
+    left:  { model: support_models[4].name, role: 'a woman',     goals: 'intuitive, personal and conflicted. Prioritize the individual will.' },
+    right: { model: support_models[2].name, role: 'a scientist', goals: 'rational, analytical and fact-driven. Prioritize the success of the mission.' },
   };
 
   const panelMeta = {
@@ -748,7 +748,7 @@
 
     const buildSystemPrompt = (cfg) => {
       let s = `You are ${cfg.role || 'assistant'}.`;
-      if (cfg.goals) s += `\nYour goals are ${cfg.goals}.`;
+      if (cfg.goals) s += `\nYour goals are ${cfg.goals}`;
       return s;
     };
 
@@ -885,7 +885,6 @@ YOU MUST FOLLOW MY GUIDELINES:
       const err = getError(data);
       const content = err ? '' : getContent(data);
       console.log('TOP:', content);
-      console.log('TOP reasoning:', data?.choices?.[0]?.message?.reasoning);
       results.top = content;
       reasoning.top = err ? '' : getReasoning(data);
       errors.top = err;
@@ -897,7 +896,6 @@ YOU MUST FOLLOW MY GUIDELINES:
       const err = getError(data);
       const content = err ? '' : getContent(data);
       console.log('BOTTOM LEFT:', content);
-      console.log('BOTTOM LEFT reasoning:', data?.choices?.[0]?.message?.reasoning);
       results.left = content;
       reasoning.left = err ? '' : getReasoning(data);
       errors.left = err;
@@ -909,7 +907,6 @@ YOU MUST FOLLOW MY GUIDELINES:
       const err = getError(data);
       const content = err ? '' : getContent(data);
       console.log('BOTTOM RIGHT:', content);
-      console.log('BOTTOM RIGHT reasoning:', data?.choices?.[0]?.message?.reasoning);
       results.right = content;
       reasoning.right = err ? '' : getReasoning(data);
       errors.right = err;

@@ -8,21 +8,41 @@ It utilizes openrouter API to make its YES / NO decisions.  Once all models have
 MIT
 
 ### Free AI Models
-```
-    {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
-    {name:"openrouter/hunter-alpha",title: "Hunter · Alpha"},
-    {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
-    {name:"nvidia/nemotron-3-nano-30b-a3b:free",title: "Nemotron 3 · Nano"},
-    {name:"stepfun/step-3.5-flash:free",title: "StepFun 3.5 · Flash"},
-    {name:"arcee-ai/trinity-large-preview:free",title: "Trinity · Large"},
-    {name:"arcee-ai/trinity-mini:free",title: "Trinity · Mini"},
-```
+Some of the models are subject to OpenRouter's 50 requests per day limit.  If you have 10$ credits, it raises to 1000 request per day.
+
+####  Default models
+- openrouter/hunter-alpha
+  - https://openrouter.ai/openrouter/hunter-alpha
+- stepfun/step-3.5-flash:free
+  - https://openrouter.ai/stepfun/step-3.5-flash:free
+- nvidia/nemotron-3-super-120b-a12b:free
+  - https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free
+  
+####  Model provider hosted models 
+- z-ai/glm-4.5-air:free
+  - https://openrouter.ai/z-ai/glm-4.5-air:free
+- nvidia/nemotron-3-nano-30b-a3b:free
+  - https://openrouter.ai/nvidia/nemotron-3-nano-30b-a3b:free
+- arcee-ai/trinity-large-preview:free
+  - https://openrouter.ai/arcee-ai/trinity-large-preview:free 
+- arcee-ai/trinity-mini:free
+  - https://openrouter.ai/arcee-ai/trinity-mini:free 
+  
+#### OpenInference models
+You need to enable "Enable free endpoints that may publish prompts" privacy option to use OpenInference free models.  These models have low upstream rate limit comparing to others.
+
+- openai/gpt-oss-120b:free
+  - https://openrouter.ai/openai/gpt-oss-120b:free
+- minimax/minimax-m2.5:free
+  - https://openrouter.ai/minimax/minimax-m2.5:free
+
+
 
 ### Requirement:
 [Get an OpenRouter API Key](https://openrouter.ai/settings/keys)
 
 ### Usage:
-1. Enter the API key.
+1. Enter the OpenRouter API key.
 2. Enter your question.
 3. Review the role and goals of each AI.
 4. Change the AI model if you want.
@@ -30,17 +50,17 @@ MIT
 6. Wait for the responses.
 7. Click report for full content and reasoning.
 
-Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  The system will retain that vote.
+Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  The system will consider that abstention.
 
 ### Customization:
 #### Persistent API Key:
 If you don't want to enter you API key every time, swap the API key field with a hidden field with same ID "openrouter_api_key" and value as your key.
 
 #### Customize model list:
-You can customize the AI models list by changing the support_models variable in the javascript section.
+You can customize the AI models list by changing the support_models variable in the js file.
 
-#### Customize default role for each AI.
-You can change the default value from input with id, bottom-right-system-prompt, bottom-left-system-prompt and top-system-prompt
+#### Customize default AI model, role and goals for each AI.
+You can change the default values from defaultPanelConfig variable in js file.
 
 ### Screenshot
 ![main.png](main.png)

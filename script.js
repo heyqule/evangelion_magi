@@ -1,11 +1,16 @@
 const support_models = [
-  {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
+  /* Default Models */
   {name:"openrouter/hunter-alpha",title: "Hunter · Alpha"},
-  {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
-  {name:"nvidia/nemotron-3-nano-30b-a3b:free",title: "Nemotron 3 · Nano"},
   {name:"stepfun/step-3.5-flash:free",title: "StepFun 3.5 · Flash"},
+  {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
+  /* Official hosted model */
+  {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
+  {name:"nvidia/nemotron-3-nano-30b-a3b:free",title: "Nemotron 3 · Nano"},
   {name:"arcee-ai/trinity-large-preview:free",title: "Trinity · Large"},
   {name:"arcee-ai/trinity-mini:free",title: "Trinity · Mini"},
+  /* 3rd party hosted */
+  {name:"openai/gpt-oss-120b:free", title: "GPT OSS · 120B"},
+  {name:"minimax/minimax-m2.5:free", title: "Minimax · M2.5"},
 ];
 
 const magiAlert = (msg) => {
@@ -32,8 +37,8 @@ const savePanelConfigToStorage = () => {
 
 // ── Per-panel configuration state ──
 const defaultPanelConfig = {
-  top:   { model: support_models[1].name, role: 'a mother',    goals: 'nurturing, emotional and protective. Prioritize the well-being of her children.' },
-  left:  { model: support_models[4].name, role: 'a woman',     goals: 'intuitive, personal and conflicted. Prioritize the individual will.' },
+  top:   { model: support_models[0].name, role: 'a mother',    goals: 'nurturing, emotional and protective. Prioritize the well-being of her children.' },
+  left:  { model: support_models[1].name, role: 'a woman',     goals: 'intuitive, personal and conflicted. Prioritize the individual will.' },
   right: { model: support_models[2].name, role: 'a scientist', goals: 'rational, analytical and fact-driven. Prioritize the success of the mission.' },
 };
 
@@ -162,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const normalizeResponse = (response) => {
   if (!response) return '';
-  return response.substring(0, 3).trim().toLowerCase();
+  return response.trim().substring(0, 3).trim().toLowerCase();
 };
 
 const updatePanelColor = (panelId, response) => {
@@ -182,7 +187,7 @@ const updatePanelColor = (panelId, response) => {
   } else if(norm.includes('no')) {
     panel.setAttribute('fill', '#ff3333'); // Red for no
   } else {
-    panel.setAttribute('fill', '#888888'); // Grey for non-yes/no
+    panel.setAttribute('fill', '#FFAA00'); // Yellow for non-yes/no
   }
 };
 

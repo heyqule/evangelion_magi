@@ -137,7 +137,7 @@
 <div class="magi-overlay" id="panel-config-overlay">
   <div class="magi-alert" id="panel-config-modal" style="width:460px;">
     <div class="magi-alert-scanline"></div>
-    <div class="magi-alert-header">
+    <div class="magi-alert-header" style="padding:6px 20px;">
       <span class="magi-alert-title" id="panel-config-title">// PANEL CONFIG</span>
       <span class="magi-alert-code" id="panel-config-code">MAGI_SYS</span>
     </div>
@@ -145,11 +145,18 @@
 
       <div style="display:flex; flex-direction:column; gap:4px;">
         <label style="color:#CC8800; font-size:10px; letter-spacing:3px; font-family:'Courier New',monospace;">AI MODEL</label>
-        <select id="panel-config-model" style="
-          background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
-          font-size:13px; font-family:'Courier New',monospace;
-          padding:4px 8px; outline:none; width:100%; cursor:pointer;
-"></select>
+        <div style="position:relative; width:100%;">
+          <select id="panel-config-model" style="
+            background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
+            font-size:13px; font-family:'Courier New',monospace;
+            padding:4px 28px 4px 8px; outline:none; width:100%; cursor:pointer;
+            appearance:none; -webkit-appearance:none;
+          "></select>
+          <span style="
+            position:absolute; right:8px; top:50%; transform:translateY(-50%);
+            color:#CC8800; font-size:10px; pointer-events:none; line-height:1;
+          ">▼</span>
+        </div>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:4px;">
@@ -157,8 +164,8 @@
         <input id="panel-config-role" type="text" style="
           background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
           font-size:13px; font-family:'Courier New',monospace;
-          padding:4px 8px; outline:none; width:100%;
-" placeholder="e.g. accountant"/>
+          padding:4px 8px; outline:none; width:100%; box-sizing:border-box;
+        " placeholder="e.g. accountant"/>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:4px;">
@@ -167,14 +174,30 @@
           background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
           font-size:13px; font-family:'Courier New',monospace;
           padding:4px 8px; outline:none; width:100%; resize:none;
-          min-height:72px;
+          min-height:72px; box-sizing:border-box;
         " placeholder="e.g. maximize profit while minimizing risk"></textarea>
       </div>
 
     </div>
-    <div class="magi-alert-footer" style="gap:10px;">
+    <div class="magi-alert-footer" style="gap:10px; padding:8px 20px;">
       <button class="magi-alert-btn" id="panel-config-cancel" style="background:#040E0C; color:#CC8800; border:1px solid #CC8800;">CANCEL</button>
       <button class="magi-alert-btn" id="panel-config-save">SAVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAGI Confirm Modal -->
+<div class="magi-overlay" id="magi-confirm-overlay">
+  <div class="magi-alert">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-alert-header">
+      <span class="magi-alert-title">// SYSTEM WARNING</span>
+      <span class="magi-alert-code">MAGI_SYS</span>
+    </div>
+    <div class="magi-alert-body">ALL PANEL CONFIGS WILL BE RESET TO DEFAULT. PROCEED?</div>
+    <div class="magi-alert-footer" style="gap:10px;">
+      <button class="magi-alert-btn" id="magi-confirm-no" style="background:#040E0C; color:#CC8800; border:1px solid #CC8800;">NEGATIVE</button>
+      <button class="magi-alert-btn" id="magi-confirm-yes">AFFIRMATIVE</button>
     </div>
   </div>
 </div>

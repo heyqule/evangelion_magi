@@ -37,7 +37,7 @@ const defaultPanelConfig = {
   right: { model: support_models[2].name, role: 'a scientist', goals: 'rational, analytical and fact-driven. Prioritize the success of the mission.' },
 };
 
-const panelConfig = loadPanelConfigFromStorage() || defaultPanelConfig;
+const panelConfig = loadPanelConfigFromStorage() || JSON.parse(JSON.stringify(defaultPanelConfig));
 
 const panelMeta = {
   top:   { title: '// BALTHASAR CONFIG', code: 'PANEL:TOP',   modelLabel: 'panel-top-model-label',   roleLabel: 'panel-top-role-label'   },
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('magi-overlay').classList.remove('active');
     }
   });
-  document.getElementById('reset-btn').addEventListener('click', () => {
+  const doReset = () => {
     localStorage.removeItem(LS_KEY);
     Object.assign(panelConfig, JSON.parse(JSON.stringify(defaultPanelConfig)));
     ['top','left','right'].forEach(updatePanelLabels);
@@ -125,23 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePanelColor('panel-bottom-right', '');
     updateStatusDisplay('等 待', '', '');
     document.getElementById('report-btn').style.display = 'none';
+  };
+
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    document.getElementById('magi-confirm-overlay').classList.add('active');
+  });
+  document.getElementById('magi-confirm-yes').addEventListener('click', () => {
+    document.getElementById('magi-confirm-overlay').classList.remove('active');
+    doReset();
+  });
+  document.getElementById('magi-confirm-no').addEventListener('click', () => {
+    document.getElementById('magi-confirm-overlay').classList.remove('active');
+  });
+  document.getElementById('magi-confirm-overlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('magi-confirm-overlay')) {
+      document.getElementById('magi-confirm-overlay').classList.remove('active');
+    }
   });
 
   document.getElementById('submit-btn').addEventListener('click', () => {
     document.getElementById('report-btn').style.display = 'none';
     makeOpenRouterApiCall();
-  });
-  document.getElementById('reset-btn').addEventListener('click', () => {
-    localStorage.removeItem(LS_KEY);
-    Object.assign(panelConfig, JSON.parse(JSON.stringify(defaultPanelConfig)));
-    ['top', 'left', 'right'].forEach(updatePanelLabels);
-    document.getElementById('openrouter_api_key').value = '';
-    document.getElementById('question').value = '';
-    updatePanelColor('panel-top', '');
-    updatePanelColor('panel-bottom-left', '');
-    updatePanelColor('panel-bottom-right', '');
-    updateStatusDisplay('等 待', '', '');
-    document.getElementById('report-btn').style.display = 'none';
   });
   document.getElementById('report-btn').addEventListener('click', () => {
     document.getElementById('report-overlay').classList.add('active');

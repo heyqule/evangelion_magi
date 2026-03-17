@@ -24,7 +24,7 @@ MIT
 ### Usage:
 1. Enter the API key
 2. Enter your question
-3. Set the role of each AI
+3. Review the role and goals of each AI.
 4. Change the AI model if you want.
 5. Submit
 6. Wait for the responses.
@@ -43,7 +43,7 @@ You can change the default value from input with id, bottom-right-system-prompt,
 ### Screenshot
 ![main.png](main.png)
 
-#### Select new AI model
+#### Select new AI model, set role and goals
 ![model_selection.png](model_selection.png)
 
 #### Report on full content and reasoning for each model.

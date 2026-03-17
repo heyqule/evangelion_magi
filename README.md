@@ -1,6 +1,6 @@
 # Evangelion Magi Decision AIs
 
-OK. I vibe code this for lol.  
+OK. I vibe coded this for lol.  
 
 It utilizes openrouter API to make its YES / NO decisions.  Once all models have responded, it then decides the final "Accept" or "Reject".
 
@@ -19,7 +19,7 @@ MIT
 6. Wait for the responses.
 7. Click report for full content and reasoning.
 
-Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  The system will consider that abstention.
+Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  If the LLM return a non-boolean answer, the system will consider that abstention.
 
 #### Status:
 - 等 待 - Waiting

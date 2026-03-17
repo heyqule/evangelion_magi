@@ -22,13 +22,15 @@ MIT
 [Get an OpenRouter API Key](https://openrouter.ai/settings/keys)
 
 ### Usage:
-1. Enter the API key
-2. Enter your question
+1. Enter the API key.
+2. Enter your question.
 3. Review the role and goals of each AI.
 4. Change the AI model if you want.
 5. Submit
 6. Wait for the responses.
 7. Click report for full content and reasoning.
+
+Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  The system will retain that vote.
 
 ### Customization:
 #### Persistent API Key:

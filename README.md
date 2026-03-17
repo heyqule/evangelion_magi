@@ -4,6 +4,8 @@ OK. I vibe coded this for lol.
 
 It utilizes openrouter API to make its YES / NO decisions.  Once all models have responded, it then decides the final "Accept" or "Reject".
 
+You can run this without a server. :)
+
 ### License
 MIT
 
@@ -17,15 +19,15 @@ MIT
 4. Change the AI model if you want.
 5. Submit
 6. Wait for the responses.
-7. Click report for full content and reasoning.
+7. Click report to view full content and reasoning.
 
-Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  If the LLM return a non-boolean answer, the system will consider that abstention.
+Re:Question. Describe your case, then end with a boolean question.  You can try non-boolean questions as well, it may respond a non-boolean answer.  If the AI returns a non-boolean answer, the system will consider that abstention.
 
 #### Status:
 - 等 待 - Waiting
 - 商議中 - Processing
-- 同 意 - Accepted
-- 否 定 - Rejected
+- 同 意 - Accepted in Majority
+- 否 定 - Rejected in Majority
 - 誤 差 - Equal vote or no vote due to AI error or AI resulting in abstention
 
 

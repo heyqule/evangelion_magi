@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evangelion MAGI System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="magi-frame">
+
+  <div class="magi-scanline"></div>
+
+  <!-- Header -->
+  <div class="magi-header">
+    <div class="header-kanji">質　問</div>
+    <div class="header-kanji">解　決</div>
+  </div>
+
+  <!-- Content -->
+  <div class="magi-content">
+
+    <div class="sys-info">
+      <div class="code-line">CODE:666</div>
+      <div>FILE:MAGI_SYS</div>
+      <div>EXTENTION:9420</div>
+      <div>EX_MODE:OFF</div>
+      <div>PRIORITY:SSS</div>
+    </div>
+
+    <div class="joho">等 待</div>
+
+    <svg class="panels-svg"
+        viewBox="0 0 800 348"
+         xmlns="http://www.w3.org/2000/svg">
+
+      <polygon id="panel-top"
+        points="204,0 596,0 596,126 463,176 337,176 204,126"
+        fill="#54C8DC" style="cursor:pointer;" onclick="openPanelConfig('top')"/>
+      <text x="400" y="48"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="rgba(4,14,12,0.15)" font-size="44" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif" pointer-events="none"
+        letter-spacing="6">BALTHASAR</text>
+      <text id="panel-top-model-label" x="400" y="70"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="#040E0C" font-size="16" font-weight="bold"
+        font-family="'Courier New', monospace" pointer-events="none"
+        letter-spacing="1">—</text>
+      <text id="panel-top-role-label" x="400" y="120"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="#040E0C" font-size="13" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif" pointer-events="none"
+        letter-spacing="1">A MOTHER</text>
+
+      <!-- ── CASPER (bottom-left) ── -->
+      <polygon id="panel-bottom-left"
+        points="0,190 156,190 276,235 276,350 0,350"
+        fill="#54C8DC" style="cursor:pointer;" onclick="openPanelConfig('left')"/>
+      <text x="104" y="232"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="rgba(4,14,12,0.15)" font-size="30" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif" pointer-events="none"
+        letter-spacing="4">CASPER</text>
+      <text id="panel-left-model-label" x="14" y="252"
+        text-anchor="start" dominant-baseline="middle"
+        fill="#040E0C" font-size="16" font-weight="bold"
+        font-family="'Courier New', monospace" pointer-events="none"
+        letter-spacing="1">—</text>
+      <text id="panel-left-role-label" x="14" y="300"
+        text-anchor="start" dominant-baseline="middle"
+        fill="#040E0C" font-size="13" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif" pointer-events="none"
+        letter-spacing="1">A WOMAN</text>
+
+      <!-- ── MELCHIOR (bottom-right) ── -->
+      <polygon id="panel-bottom-right"
+        points="524,235 644,190 800,190 800,350 524,350"
+        fill="#54C8DC" style="cursor:pointer;" onclick="openPanelConfig('right')"/>
+      <text x="696" y="232"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="rgba(4,14,12,0.15)" font-size="28" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif" pointer-events="none"
+        letter-spacing="4">MELCHIOR</text>
+      <text id="panel-right-model-label" x="786" y="252"
+        text-anchor="end" dominant-baseline="middle"
+        fill="#040E0C" font-size="16" font-weight="bold"
+        font-family="'Courier New', monospace" pointer-events="none"
+        letter-spacing="1">—</text>
+      <text id="panel-right-role-label" x="786" y="300"
+        text-anchor="end" dominant-baseline="middle"
+        fill="#040E0C" font-size="13" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif" pointer-events="none"
+        letter-spacing="1">A SCIENTIST</text>
+      <!-- ══ 3 CONNECTOR LINES — one per panel pair ══ -->
+      <!-- BALTHASAR ↔ CASPER -->
+      <line x1="262" y1="147" x2="230" y2="218" stroke="#CC8800" stroke-width="10" stroke-linecap="butt"></line>
+      <!-- BALTHASAR ↔ MELCHIOR  -->
+      <line x1="540" y1="147" x2="570" y2="218" stroke="#CC8800" stroke-width="10" stroke-linecap="butt"></line>
+      <!-- CASPER ↔ MELCHIOR -->
+      <line x1="276" y1="292" x2="524" y2="292"stroke="#CC8800" stroke-width="10" stroke-linecap="butt"/>
+
+      <!-- ── MAGI label at centroid of all 6 endpoints → (400, 218) ── -->
+      <rect x="356" y="208"width="88" height="20" fill="#040E0C"/>
+      <text x="400" y="218"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="#CC8800"
+        font-size="32" font-weight="900"
+        font-family="Arial Black, Impact, Arial, sans-serif"
+        letter-spacing="5">MAGI</text>
+
+    </svg>
+
+  </div><!-- /content -->
+
+  <!-- Footer -->
+  <div class="magi-footer">
+    <div class="footer-api-notice">
+      <span class="footer-api-notice-icon">⬡</span>
+      PLEASE SPECIFY YOUR AI VENDOR API FOR EACH PANEL
+      <span class="footer-api-notice-icon">⬡</span>
+    </div>
+    <div class="footer-row">
+      <span class="footer-label">Question:</span>
+      <textarea id="question" class="question-textarea" rows="5" placeholder="Describe your case, then end with a boolean question..."></textarea>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button id="submit-btn" class="submit-btn" style="flex:1;">SUBMIT</button>
+      <button id="reset-btn" class="submit-btn" style="background:#040E0C; color:#CC8800; border:1px solid #CC8800; flex:0 0 auto;">RESET DEFAULT</button>
+    </div>
+    <button id="report-btn" class="submit-btn"style="display:none; background:#040E0C; color:#CC8800; margin-top:0;">VIEW REPORT</button>
+  </div>
+
+</div>
+
+<!-- MAGI Panel Config Modal -->
+<div class="magi-overlay" id="panel-config-overlay">
+  <div class="magi-alert" id="panel-config-modal" style="width:460px;">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-alert-header" style="padding:6px 20px;">
+      <span class="magi-alert-title" id="panel-config-title">// PANEL CONFIG</span>
+      <span class="magi-alert-code" id="panel-config-code">MAGI_SYS</span>
+    </div>
+    <div style="padding:16px 20px 10px; display:flex; flex-direction:column; gap:12px;">
+
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <label style="color:#CC8800; font-size:10px; letter-spacing:3px; font-family:'Courier New',monospace;">API ENDPOINT URL</label>
+        <input id="panel-config-apiurl" type="text" style="
+          background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
+          font-size:13px; font-family:'Courier New',monospace;
+          padding:4px 8px; outline:none; width:100%; box-sizing:border-box;
+        " placeholder="e.g. https://openrouter.ai/api/v1/chat/completions"/>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <label style="color:#CC8800; font-size:10px; letter-spacing:3px; font-family:'Courier New',monospace;">API KEY</label>
+        <input id="panel-config-apikey" type="password" style="
+          background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
+          font-size:13px; font-family:'Courier New',monospace;
+          padding:4px 8px; outline:none; width:100%; box-sizing:border-box;
+        " placeholder="sk-or-..."/>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <label style="color:#CC8800; font-size:10px; letter-spacing:3px; font-family:'Courier New',monospace;">AI MODEL <span style="color:#7A4400; letter-spacing:1px;">— exact model string</span></label>
+        <input id="panel-config-model" type="text" style="
+          background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
+          font-size:13px; font-family:'Courier New',monospace;
+          padding:4px 8px; outline:none; width:100%; box-sizing:border-box;
+        " placeholder="e.g. openai/gpt-4o, anthropic/claude-3-5-sonnet"/>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <label style="color:#CC8800; font-size:10px; letter-spacing:3px; font-family:'Courier New',monospace;">ROLE <span style="color:#7A4400; letter-spacing:1px;">— "You are [role]..."</span></label>
+        <input id="panel-config-role" type="text" style="
+          background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
+          font-size:13px; font-family:'Courier New',monospace;
+          padding:4px 8px; outline:none; width:100%; box-sizing:border-box;
+        " placeholder="e.g. accountant"/>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <label style="color:#CC8800; font-size:10px; letter-spacing:3px; font-family:'Courier New',monospace;">GOALS <span style="color:#7A4400; letter-spacing:1px;">— "Your goals are [goals]..."</span></label>
+        <textarea id="panel-config-goals" style="
+          background:#080F0E; border:1px solid #CC8800; color:#FFAA00;
+          font-size:13px; font-family:'Courier New',monospace;
+          padding:4px 8px; outline:none; width:100%; resize:none;
+          min-height:72px; box-sizing:border-box;
+        " placeholder="e.g. maximize profit while minimizing risk"></textarea>
+      </div>
+
+    </div>
+    <div class="magi-alert-footer" style="gap:10px; padding:8px 20px;">
+      <button class="magi-alert-btn" id="panel-config-cancel" style="background:#040E0C; color:#CC8800; border:1px solid #CC8800;">CANCEL</button>
+      <button class="magi-alert-btn" id="panel-config-save">SAVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAGI Confirm Modal -->
+<div class="magi-overlay" id="magi-confirm-overlay">
+  <div class="magi-alert">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-alert-header">
+      <span class="magi-alert-title">// SYSTEM WARNING</span>
+      <span class="magi-alert-code">MAGI_SYS</span>
+    </div>
+    <div class="magi-alert-body">ALL PANEL CONFIGS WILL BE RESET TO DEFAULT. PROCEED?</div>
+    <div class="magi-alert-footer" style="gap:10px;">
+      <button class="magi-alert-btn" id="magi-confirm-no" style="background:#040E0C; color:#CC8800; border:1px solid #CC8800;">NEGATIVE</button>
+      <button class="magi-alert-btn" id="magi-confirm-yes">AFFIRMATIVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAGI Custom Alert Modal -->
+<div class="magi-overlay" id="magi-overlay">
+  <div class="magi-alert" id="magi-alert">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-alert-header">
+      <span class="magi-alert-title">//SYSTEM ALERT</span>
+      <span class="magi-alert-code" id="magi-alert-code">ERR:MAGI_SYS</span>
+    </div>
+    <div class="magi-alert-body" id="magi-alert-msg">Message here.</div>
+    <div class="magi-alert-footer" style="gap:10px;">
+      <button class="magi-alert-btn" id="magi-alert-ok">CONFIRM</button>
+      <button class="magi-alert-btn" id="magi-alert-config" style="display:none; background:#040E0C; color:#CC8800; border:1px solid #CC8800;">OPEN PANEL CONFIG</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAGI Report Modal -->
+<div class="magi-overlay" id="report-overlay">
+  <div class="magi-report">
+    <div class="magi-alert-scanline"></div>
+    <div class="magi-report-header">
+      <span class="magi-alert-title">// DELIBERATION REPORT</span>
+      <span class="magi-alert-code" id="report-verdict-code">MAGI_SYS</span>
+    </div>
+    <div class="magi-report-body" id="report-body"></div>
+    <div class="magi-alert-footer">
+      <button class="magi-alert-btn" id="report-close-btn">CLOSE</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,23 +1,12 @@
-const support_models = [
-  /* Default Models */
-  {name:"arcee-ai/trinity-large-preview:free",title: "Trinity · Large"},
-  {name:"stepfun/step-3.5-flash:free",title: "StepFun 3.5 · Flash"},
-  {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
-  /* Official hosted model */
-  {name:"openrouter/free",title: "Openrouter · Free"},
-  {name:"openrouter/hunter-alpha",title: "Hunter · Alpha"},
-  {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
-  {name:"nvidia/nemotron-3-nano-30b-a3b:free",title: "Nemotron 3 · Nano"},
-  {name:"arcee-ai/trinity-mini:free",title: "Trinity · Mini"},
-  /* OpenInference hosted */
-  {name:"openai/gpt-oss-120b:free", title: "GPT OSS · 120B"},
-  {name:"openai/gpt-oss-20b:free", title: "GPT OSS · 20B"},
-  {name:"google/gemma-3-27b-it:free", title: "Gemma 3 · 27B"},
-  {name:"minimax/minimax-m2.5:free", title: "Minimax · M2.5"},
-];
-
-const magiAlert = (msg) => {
+const magiAlert = (msg, panelKey = null, codeLabel = 'ERR:MAGI_SYS') => {
   document.getElementById('magi-alert-msg').textContent = msg;
+  document.getElementById('magi-alert-code').textContent = codeLabel;
+  pendingConfigKey = panelKey;
+  const configBtn = document.getElementById('magi-alert-config');
+  configBtn.style.display = panelKey ? 'inline-block' : 'none';
+  if (panelKey) {
+    configBtn.textContent = `OPEN ${panelMeta[panelKey].code} CONFIG`;
+  }
   document.getElementById('magi-overlay').classList.add('active');
 };
 
@@ -40,12 +29,19 @@ const savePanelConfigToStorage = () => {
 
 // ── Per-panel configuration state ──
 const defaultPanelConfig = {
-  top:   { model: support_models[0].name, role: 'a mother',    goals: 'nurturing, emotional and protective. Prioritize the well-being of her children.' },
-  left:  { model: support_models[1].name, role: 'a woman',     goals: 'intuitive, personal and conflicted. Prioritize the individual will.' },
-  right: { model: support_models[2].name, role: 'a scientist', goals: 'rational, analytical and fact-driven. Prioritize the success of the mission.' },
+  top:   { model: '', role: 'a mother',    goals: 'nurturing, emotional and protective. Prioritize the well-being of her children.', apiUrl: '', apiKey: '' },
+  left:  { model: '', role: 'a woman',     goals: 'intuitive, personal and conflicted. Prioritize the individual will.',              apiUrl: '', apiKey: '' },
+  right: { model: '', role: 'a scientist', goals: 'rational, analytical and fact-driven. Prioritize the success of the mission.',      apiUrl: '', apiKey: '' },
 };
 
 const panelConfig = loadPanelConfigFromStorage() || JSON.parse(JSON.stringify(defaultPanelConfig));
+
+// Ensure legacy stored configs get any missing fields
+['top', 'left', 'right'].forEach(key => {
+  if (panelConfig[key].apiUrl === undefined) panelConfig[key].apiUrl = '';
+  if (panelConfig[key].apiKey === undefined) panelConfig[key].apiKey = '';
+  if (panelConfig[key].model  === undefined) panelConfig[key].model  = '';
+});
 
 const panelMeta = {
   top:   { title: '// BALTHASAR CONFIG', code: 'PANEL:TOP',   modelLabel: 'panel-top-model-label',   roleLabel: 'panel-top-role-label'   },
@@ -53,49 +49,42 @@ const panelMeta = {
   right: { title: '// MELCHIOR CONFIG',  code: 'PANEL:RIGHT', modelLabel: 'panel-right-model-label', roleLabel: 'panel-right-role-label' },
 };
 
+// pendingConfigKey: if set, the "OPEN PANEL CONFIG" button in the alert will open that panel
+let pendingConfigKey = null;
+
 const updatePanelLabels = (key) => {
-  const cfg = panelConfig[key];
+  const cfg  = panelConfig[key];
   const meta = panelMeta[key];
-  const modelTitle = (support_models.find(m => m.name === cfg.model) || support_models[0]).title;
-  const labelEl = document.getElementById(meta.modelLabel);
-  // Render the · separator with a larger tspan
-  const parts = modelTitle.split('·');
-  if (parts.length === 2) {
-    labelEl.innerHTML = `${parts[0]}<tspan font-size="48" dy="4">·</tspan><tspan dy="-4">${parts[1]}</tspan>`;
-  } else {
-    labelEl.textContent = modelTitle;
-  }
-  document.getElementById(meta.roleLabel).textContent = cfg.role.toUpperCase() || '—';
+  const modelSlug = cfg.model ? (cfg.model.includes('/') ? cfg.model.split('/').slice(1).join('/') : cfg.model) : '';
+  const modelDisplay = modelSlug ? modelSlug.split('-').slice(0, 3).join('-') : '—';
+  document.getElementById(meta.modelLabel).textContent = modelDisplay;
+  document.getElementById(meta.roleLabel).textContent  = (cfg.role || '—').toUpperCase();
 };
 
 let activePanelKey = null;
 
 window.openPanelConfig = (key) => {
   activePanelKey = key;
-  const cfg = panelConfig[key];
+  const cfg  = panelConfig[key];
   const meta = panelMeta[key];
   document.getElementById('panel-config-title').textContent = meta.title;
-  document.getElementById('panel-config-code').textContent = meta.code;
-  const sel = document.getElementById('panel-config-model');
-  sel.innerHTML = '';
-  support_models.forEach(m => {
-    const opt = document.createElement('option');
-    opt.value = m.name;
-    opt.textContent = m.title;
-    if (m.name === cfg.model) opt.selected = true;
-    sel.appendChild(opt);
-  });
-  document.getElementById('panel-config-role').value = cfg.role;
-  document.getElementById('panel-config-goals').value = cfg.goals;
+  document.getElementById('panel-config-code').textContent  = meta.code;
+  document.getElementById('panel-config-apiurl').value = cfg.apiUrl || '';
+  document.getElementById('panel-config-apikey').value = cfg.apiKey || '';
+  document.getElementById('panel-config-model').value  = cfg.model  || '';
+  document.getElementById('panel-config-role').value   = cfg.role   || '';
+  document.getElementById('panel-config-goals').value  = cfg.goals  || '';
   document.getElementById('panel-config-overlay').classList.add('active');
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  ['top','left','right'].forEach(updatePanelLabels);
+  ['top', 'left', 'right'].forEach(updatePanelLabels);
 
   document.getElementById('panel-config-save').addEventListener('click', () => {
     if (!activePanelKey) return;
-    panelConfig[activePanelKey].model  = document.getElementById('panel-config-model').value;
+    panelConfig[activePanelKey].apiUrl = document.getElementById('panel-config-apiurl').value.trim();
+    panelConfig[activePanelKey].apiKey = document.getElementById('panel-config-apikey').value.trim();
+    panelConfig[activePanelKey].model  = document.getElementById('panel-config-model').value.trim();
     panelConfig[activePanelKey].role   = document.getElementById('panel-config-role').value.trim();
     panelConfig[activePanelKey].goals  = document.getElementById('panel-config-goals').value.trim();
     savePanelConfigToStorage();
@@ -103,10 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('panel-config-overlay').classList.remove('active');
     activePanelKey = null;
   });
+
   document.getElementById('panel-config-cancel').addEventListener('click', () => {
     document.getElementById('panel-config-overlay').classList.remove('active');
     activePanelKey = null;
   });
+
   document.getElementById('panel-config-overlay').addEventListener('click', (e) => {
     if (e.target === document.getElementById('panel-config-overlay')) {
       document.getElementById('panel-config-overlay').classList.remove('active');
@@ -116,16 +107,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('magi-alert-ok').addEventListener('click', () => {
     document.getElementById('magi-overlay').classList.remove('active');
+    pendingConfigKey = null;
   });
+
+  document.getElementById('magi-alert-config').addEventListener('click', () => {
+    document.getElementById('magi-overlay').classList.remove('active');
+    if (pendingConfigKey) {
+      const key = pendingConfigKey;
+      pendingConfigKey = null;
+      openPanelConfig(key);
+    }
+  });
+
   document.getElementById('magi-overlay').addEventListener('click', (e) => {
     if (e.target === document.getElementById('magi-overlay')) {
       document.getElementById('magi-overlay').classList.remove('active');
+      pendingConfigKey = null;
     }
   });
+
   const doReset = () => {
     localStorage.removeItem(LS_KEY);
     Object.assign(panelConfig, JSON.parse(JSON.stringify(defaultPanelConfig)));
-    ['top','left','right'].forEach(updatePanelLabels);
+    ['top', 'left', 'right'].forEach(updatePanelLabels);
     document.getElementById('question').value = '';
     updatePanelColor('panel-top', '');
     updatePanelColor('panel-bottom-left', '');
@@ -152,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('submit-btn').addEventListener('click', () => {
     document.getElementById('report-btn').style.display = 'none';
-    makeOpenRouterApiCall();
+    makeApiCalls();
   });
   document.getElementById('report-btn').addEventListener('click', () => {
     document.getElementById('report-overlay').classList.add('active');
@@ -167,6 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ── Panel display names for alerts ──
+const panelDisplayName = {
+  top:   'BALTHASAR (TOP)',
+  left:  'CASPER (LEFT)',
+  right: 'MELCHIOR (RIGHT)',
+};
+
 const normalizeResponse = (response) => {
   if (!response) return '';
   return response.trim().substring(0, 3).trim().toLowerCase();
@@ -175,23 +186,22 @@ const normalizeResponse = (response) => {
 const updatePanelColor = (panelId, response) => {
   const panel = document.getElementById(panelId);
   if (!panel) return;
-  // Always stop pulsing when an explicit color is being set
   panel.classList.remove('panel-pulsing');
   if (response === '') {
-    panel.setAttribute('fill', '#54C8DC'); // Blue for idle/reset
+    panel.setAttribute('fill', '#54C8DC');
     return;
   }
   if (response === 'err') {
-    panel.setAttribute('fill', '#888888'); // Grey for error
+    panel.setAttribute('fill', '#888888');
     return;
   }
   const norm = normalizeResponse(response);
-  if(norm.includes('yes')) {
-    panel.setAttribute('fill', '#00cc66'); // Green for yes
-  } else if(norm.includes('no')) {
-    panel.setAttribute('fill', '#ff3333'); // Red for no
+  if (norm.includes('yes')) {
+    panel.setAttribute('fill', '#00cc66');
+  } else if (norm.includes('no')) {
+    panel.setAttribute('fill', '#ff3333');
   } else {
-    panel.setAttribute('fill', '#FFAA00'); // Yellow for non-yes/no
+    panel.setAttribute('fill', '#FFAA00');
   }
 };
 
@@ -199,7 +209,7 @@ const startPanelPulse = () => {
   ['panel-top', 'panel-bottom-left', 'panel-bottom-right'].forEach(id => {
     const panel = document.getElementById(id);
     if (!panel) return;
-    panel.removeAttribute('fill'); // Let CSS animation take over
+    panel.removeAttribute('fill');
     panel.classList.add('panel-pulsing');
   });
 };
@@ -207,35 +217,53 @@ const startPanelPulse = () => {
 const updateStatusDisplay = (status, textColor, borderColor) => {
   const el = document.querySelector('.joho');
   if (el) {
-    el.textContent = status;
-    el.style.color = textColor;
+    el.textContent       = status;
+    el.style.color       = textColor;
     el.style.borderColor = borderColor;
   }
 };
 
-const makeOpenRouterApiCall = () => {
-  const apiKey = document.getElementById('openrouter_api_key').value;
-  const question = document.getElementById('question').value;
+// ── Validate all panels before submission ──
+const validatePanels = () => {
+  const checks = [
+    { field: 'apiUrl', label: 'API ENDPOINT URL' },
+    { field: 'apiKey', label: 'API KEY'          },
+    { field: 'model',  label: 'AI MODEL'         },
+  ];
+  for (const key of ['top', 'left', 'right']) {
+    const cfg = panelConfig[key];
+    for (const { field, label } of checks) {
+      if (!cfg[field]) {
+        return { key, missing: label, panel: panelDisplayName[key] };
+      }
+    }
+  }
+  return null;
+};
 
-  if (!apiKey) { magiAlert('API key not provided'); return; }
-  if (!question) { magiAlert('Question not provided'); return; }
+const makeApiCalls = () => {
+  const question = document.getElementById('question').value.trim();
+
+  if (!question) {
+    magiAlert('Question not provided.');
+    return;
+  }
+
+  const invalid = validatePanels();
+  if (invalid) {
+    magiAlert(
+      `${invalid.missing} is not configured for ${invalid.panel}. Please open the panel config to set it.`,
+      invalid.key,
+      `ERR:${panelMeta[invalid.key].code}`
+    );
+    return;
+  }
 
   const buildSystemPrompt = (cfg) => {
     let s = `You are ${cfg.role || 'assistant'}.`;
     if (cfg.goals) s += `\nYour goals are ${cfg.goals}`;
     return s;
   };
-
-  const topSystemPrompt         = buildSystemPrompt(panelConfig.top);
-  const bottomLeftSystemPrompt  = buildSystemPrompt(panelConfig.left);
-  const bottomRightSystemPrompt = buildSystemPrompt(panelConfig.right);
-
-  const topModelName    = panelConfig.top.model;
-  const leftModelName   = panelConfig.left.model;
-  const rightModelName  = panelConfig.right.model;
-  const topModelTitle   = (support_models.find(m => m.name === topModelName)   || {title: topModelName}).title;
-  const leftModelTitle  = (support_models.find(m => m.name === leftModelName)  || {title: leftModelName}).title;
-  const rightModelTitle = (support_models.find(m => m.name === rightModelName) || {title: rightModelName}).title;
 
   const globalSystemPrompt = `
 ### YOU MUST FOLLOW MY GUIDELINES:
@@ -257,42 +285,47 @@ const makeOpenRouterApiCall = () => {
   updatePanelColor('panel-bottom-right', '');
   startPanelPulse();
 
-  const headers = { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' };
-  const makeCall = (model, systemPrompt) => fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST', headers,
-    body: JSON.stringify({
-      model,
-      messages: [
-        { role: 'user', content: question },
-        { role: 'system', content: systemPrompt + globalSystemPrompt }
-      ]
-    })
-  }).then(async r => {
-    const data = await r.json();
-    data.__status = r.status;
-    data.__ok = r.ok;
-    return data;
-  });
+  const makeCall = (key) => {
+    const cfg = panelConfig[key];
+    const systemPrompt = buildSystemPrompt(cfg) + globalSystemPrompt;
+    return fetch(cfg.apiUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${cfg.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: cfg.model,
+        messages: [
+          { role: 'user',   content: question     },
+          { role: 'system', content: systemPrompt },
+        ]
+      })
+    }).then(async r => {
+      const data = await r.json();
+      data.__status = r.status;
+      data.__ok     = r.ok;
+      return data;
+    });
+  };
 
-  const getContent = (data) => data?.choices?.[0]?.message?.content || '';
+  const getContent   = (data) => data?.choices?.[0]?.message?.content  || '';
   const getReasoning = (data) => data?.choices?.[0]?.message?.reasoning || '';
-  const getError = (data) => {
+  const getError     = (data) => {
     if (data.__ok) return null;
     const msg = data?.error?.message || data?.message || JSON.stringify(data);
     return { status: data.__status, message: msg };
   };
 
-  // Use undefined to distinguish "not yet returned" from a real empty result
-  const results   = { top: undefined, left: undefined, right: undefined };
-  const reasoning = { top: '',        left: '',         right: ''        };
-  const errors    = { top: null,      left: null,       right: null      };
+  const results   = { top: null, left: null, right: null };
+  const reasoning = { top: '',   left: '',   right: ''   };
+  const errors    = { top: null, left: null, right: null };
   const roles = {
-    top:   { model: topModelTitle,   role: panelConfig.top.role   },
-    left:  { model: leftModelTitle,  role: panelConfig.left.role  },
-    right: { model: rightModelTitle, role: panelConfig.right.role },
+    top:   { model: panelConfig.top.model,   role: panelConfig.top.role   },
+    left:  { model: panelConfig.left.model,  role: panelConfig.left.role  },
+    right: { model: panelConfig.right.model, role: panelConfig.right.role },
   };
 
-  // ── Build report — renders WAITING rows for panels not yet back ──
   const buildReport = () => {
     const body = document.getElementById('report-body');
     body.innerHTML = '';
@@ -304,17 +337,16 @@ const makeOpenRouterApiCall = () => {
     entries.forEach((e, i) => {
       const div = document.createElement('div');
       div.className = 'report-entry';
-
-      if (e.content === undefined) {
-        // Still waiting on this panel
+      // Still awaiting response
+      if (e.content === null && !e.error) {
         div.innerHTML = `
           <div class="report-entry-header">
             <span class="report-model-name">${e.model}</span>
             <span class="report-role">as ${e.role}</span>
-            <span class="report-verdict waiting">···</span>
+            <span class="report-verdict unk">...</span>
           </div>
           <div class="report-section-label">STATUS</div>
-          <div class="report-text waiting-text">AWAITING RESPONSE</div>
+          <div class="report-text" style="color:#CC8800;">AWAITING RESPONSE</div>
         `;
       } else if (e.error) {
         div.innerHTML = `
@@ -353,25 +385,9 @@ const makeOpenRouterApiCall = () => {
     });
   };
 
-  // ── Called after every individual result arrives ──
-  const onPanelResult = () => {
-    // Show the report button as soon as the first result is in
-    const anyIn = results.top !== undefined || results.left !== undefined || results.right !== undefined;
-    if (anyIn) {
-      document.getElementById('report-btn').style.display = 'block';
-    }
-
-    // Rebuild the report so it reflects the latest state
-    buildReport();
-
-    // If the report overlay is already open, keep it live
-    // (no extra work needed — buildReport rewrites the body in place)
-
-    checkAllDone();
-  };
-
+  // Called only when all three results are in — tallies the final verdict
   const checkAllDone = () => {
-    if (results.top === undefined || results.left === undefined || results.right === undefined) return;
+    if (results.top === null || results.left === null || results.right === null) return;
     const responses = [results.top, results.left, results.right];
     let yesCount = 0, noCount = 0;
     responses.forEach(r => {
@@ -387,40 +403,32 @@ const makeOpenRouterApiCall = () => {
       magiAlert('Votes are equal. One or more AI did not return a Yes/No answer.');
       updateStatusDisplay('誤 差', '#666', '#666');
     }
-    // Final rebuild to make sure the open report (if any) is fully up to date
-    buildReport();
+    buildReport(); // Final rebuild with all results complete
   };
 
-  makeCall(topModelName, topSystemPrompt).then(data => {
-    const err = getError(data);
-    const content = err ? '' : getContent(data);
-    console.log('TOP:', content);
-    results.top = content;
-    reasoning.top = err ? '' : getReasoning(data);
-    errors.top = err;
-    updatePanelColor('panel-top', err ? 'err' : content);
-    onPanelResult();
-  });
+  const panelSvgIds = { top: 'panel-top', left: 'panel-bottom-left', right: 'panel-bottom-right' };
 
-  makeCall(leftModelName, bottomLeftSystemPrompt).then(data => {
-    const err = getError(data);
-    const content = err ? '' : getContent(data);
-    console.log('BOTTOM LEFT:', content);
-    results.left = content;
-    reasoning.left = err ? '' : getReasoning(data);
-    errors.left = err;
-    updatePanelColor('panel-bottom-left', err ? 'err' : content);
-    onPanelResult();
-  });
-
-  makeCall(rightModelName, bottomRightSystemPrompt).then(data => {
-    const err = getError(data);
-    const content = err ? '' : getContent(data);
-    console.log('BOTTOM RIGHT:', content);
-    results.right = content;
-    reasoning.right = err ? '' : getReasoning(data);
-    errors.right = err;
-    updatePanelColor('panel-bottom-right', err ? 'err' : content);
-    onPanelResult();
+  ['top', 'left', 'right'].forEach(key => {
+    makeCall(key).then(data => {
+      const err     = getError(data);
+      const content = err ? '' : getContent(data);
+      console.log(`${key.toUpperCase()}:`, content);
+      results[key]   = content;
+      reasoning[key] = err ? '' : getReasoning(data);
+      errors[key]    = err;
+      updatePanelColor(panelSvgIds[key], err ? 'err' : content);
+      buildReport();                                          // Show immediately
+      document.getElementById('report-btn').style.display = 'block';
+      checkAllDone();                                         // Tally verdict if all done
+    }).catch(fetchErr => {
+      console.error(`${key.toUpperCase()} fetch error:`, fetchErr);
+      results[key]   = '';
+      reasoning[key] = '';
+      errors[key]    = { status: 'NET', message: fetchErr.message || 'Network error' };
+      updatePanelColor(panelSvgIds[key], 'err');
+      buildReport();                                          // Show immediately
+      document.getElementById('report-btn').style.display = 'block';
+      checkAllDone();                                         // Tally verdict if all done
+    });
   });
 };

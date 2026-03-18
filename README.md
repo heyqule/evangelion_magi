@@ -89,6 +89,9 @@ You need to enable "Enable free endpoints that may publish prompts" privacy opti
 - minimax/minimax-m2.5:free
   - https://openrouter.ai/minimax/minimax-m2.5:free
 
+#### Multi Vendor Magi
+The build in multi_vendor allow you to set your own API url, API key and model name.
+
 ### Screenshot
 ![main.png](main.png)
 

@@ -3,6 +3,7 @@ node_modules
 factorio/map
 .idea
 .env
+private_*
 
 #Logs and databases #
 ######################

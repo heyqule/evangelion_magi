@@ -178,8 +178,9 @@ const updatePanelColor = (panelId, response) => {
     panel.setAttribute('fill', '#54C8DC'); // Blue for idle/reset
     return;
   }
-  if (response === 'err') {
-    panel.setAttribute('fill', '#888888'); // Grey for error
+  // Grey for API errors OR empty responses
+  if (response === 'err' || response === 'empty') {
+    panel.setAttribute('fill', '#888888');
     return;
   }
   const norm = normalizeResponse(response);
@@ -311,6 +312,17 @@ const makeOpenRouterApiCall = () => {
             <span style="color:#CC8800; font-weight:bold;">STATUS ${e.error.status}</span> — ${e.error.message}
           </div>
         `;
+      } else if (!e.content || !e.content.trim()) {
+        // Empty response — show as its own distinct case
+        div.innerHTML = `
+          <div class="report-entry-header">
+            <span class="report-model-name">${e.model}</span>
+            <span class="report-role">as ${e.role}</span>
+            <span class="report-verdict unk">EMPTY</span>
+          </div>
+          <div class="report-section-label">RESPONSE</div>
+          <div class="report-text" style="color:#888888;">(empty response)</div>
+        `;
       } else {
         const norm = normalizeResponse(e.content);
         const verdict = norm.includes('yes') ? 'YES' : norm.includes('no') ? 'NO' : '???';
@@ -364,7 +376,9 @@ const makeOpenRouterApiCall = () => {
     results.top = content;
     reasoning.top = err ? '' : getReasoning(data);
     errors.top = err;
-    updatePanelColor('panel-top', err ? 'err' : content);
+    // Use 'empty' sentinel when no error but content is blank, to show grey instead of idle blue
+    const colorKey = err ? 'err' : (content.trim() ? content : 'empty');
+    updatePanelColor('panel-top', colorKey);
     checkAllDone();
   });
 
@@ -375,7 +389,8 @@ const makeOpenRouterApiCall = () => {
     results.left = content;
     reasoning.left = err ? '' : getReasoning(data);
     errors.left = err;
-    updatePanelColor('panel-bottom-left', err ? 'err' : content);
+    const colorKey = err ? 'err' : (content.trim() ? content : 'empty');
+    updatePanelColor('panel-bottom-left', colorKey);
     checkAllDone();
   });
 
@@ -386,7 +401,8 @@ const makeOpenRouterApiCall = () => {
     results.right = content;
     reasoning.right = err ? '' : getReasoning(data);
     errors.right = err;
-    updatePanelColor('panel-bottom-right', err ? 'err' : content);
+    const colorKey = err ? 'err' : (content.trim() ? content : 'empty');
+    updatePanelColor('panel-bottom-right', colorKey);
     checkAllDone();
   });
 };

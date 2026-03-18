@@ -52,15 +52,19 @@ You can change the default values from defaultPanelConfig variable in js file.
 Many free models are subject to OpenRouter's 50 requests per day limit.  If you have 10$ credits, it raises to 1000 requests per day.
 
 ####  Default models
-- openrouter/free
-  - Route to best free model.
-  - https://openrouter.ai/openrouter/free
+- arcee-ai/trinity-large-preview:free
+  - https://openrouter.ai/arcee-ai/trinity-large-preview:free
+  - No reasoning
 - stepfun/step-3.5-flash:free
   - https://openrouter.ai/stepfun/step-3.5-flash:free
 - nvidia/nemotron-3-super-120b-a12b:free
   - https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free
   
 ####  Model provider hosted models 
+- openrouter/free
+  - https://openrouter.ai/openrouter/free
+  - Route to best free model.
+  - But some of them may ignore system prompt.
 - openrouter/hunter-alpha
   - https://openrouter.ai/openrouter/hunter-alpha
   - Stealth model preview can be offline without notice.

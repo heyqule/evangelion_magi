@@ -52,16 +52,18 @@ You can change the default values from defaultPanelConfig variable in js file.
 Many free models are subject to OpenRouter's 50 requests per day limit.  If you have 10$ credits, it raises to 1000 requests per day.
 
 ####  Default models
-- openrouter/hunter-alpha
-  - https://openrouter.ai/openrouter/hunter-alpha
-  - **high request limit**
+- openrouter/free
+  - Route to best free model.
+  - https://openrouter.ai/openrouter/free
 - stepfun/step-3.5-flash:free
   - https://openrouter.ai/stepfun/step-3.5-flash:free
-  - **high request limit**
 - nvidia/nemotron-3-super-120b-a12b:free
   - https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free
   
 ####  Model provider hosted models 
+- openrouter/hunter-alpha
+  - https://openrouter.ai/openrouter/hunter-alpha
+  - Stealth model preview can be offline without notice.
 - z-ai/glm-4.5-air:free
   - https://openrouter.ai/z-ai/glm-4.5-air:free
 - nvidia/nemotron-3-nano-30b-a3b:free
@@ -76,6 +78,10 @@ You need to enable "Enable free endpoints that may publish prompts" privacy opti
 
 - openai/gpt-oss-120b:free
   - https://openrouter.ai/openai/gpt-oss-120b:free
+- openai/gpt-oss-20b:free
+  - https://openrouter.ai/openai/gpt-oss-20b:free 
+- google/gemma-3-27b-it
+  - https://openrouter.ai/google/gemma-3-27b-it:free
 - minimax/minimax-m2.5:free
   - https://openrouter.ai/minimax/minimax-m2.5:free
 

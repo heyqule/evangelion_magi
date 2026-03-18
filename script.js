@@ -2,6 +2,7 @@ const support_models = [
   /* Default Models */
   {name:"openrouter/hunter-alpha",title: "Hunter · Alpha"},
   {name:"stepfun/step-3.5-flash:free",title: "StepFun 3.5 · Flash"},
+  {name:"openrouter/healer-alpha",title: "Healer · Alpha"},
   {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
   /* Official hosted model */
   {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
@@ -245,7 +246,7 @@ const makeOpenRouterApiCall = () => {
 
 ### OUTPUT FORMAT:
 - You must display ONLY "YES" or "NO" on first line. Do not add any character. It MUST be in English. This rule is mission critical for other systems!  
-- Add any additional content in new line.  These contents must match the input language.
+- Add any additional content in new line.  These contents must match the language of user's question.
 `;
 
   updateStatusDisplay('商議中', '#54C8DC', '#54C8DC');

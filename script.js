@@ -1,15 +1,18 @@
 const support_models = [
   /* Default Models */
-  {name:"openrouter/hunter-alpha",title: "Hunter · Alpha"},
+  {name:"openrouter/free",title: "Openrouter · Free"},
   {name:"stepfun/step-3.5-flash:free",title: "StepFun 3.5 · Flash"},
   {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
   /* Official hosted model */
+  {name:"openrouter/hunter-alpha",title: "Hunter · Alpha"},
   {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
   {name:"nvidia/nemotron-3-nano-30b-a3b:free",title: "Nemotron 3 · Nano"},
   {name:"arcee-ai/trinity-large-preview:free",title: "Trinity · Large"},
   {name:"arcee-ai/trinity-mini:free",title: "Trinity · Mini"},
-  /* 3rd party hosted */
+  /* OpenInference hosted */
   {name:"openai/gpt-oss-120b:free", title: "GPT OSS · 120B"},
+  {name:"openai/gpt-oss-20b:free", title: "GPT OSS · 20B"},
+  {name:"google/gemma-3-27b-it:free", title: "Gemma 3 · 27B"},
   {name:"minimax/minimax-m2.5:free", title: "Minimax · M2.5"},
 ];
 

@@ -390,3 +390,62 @@ body {
 .panel-pulsing {
   animation: panelPulse 2s ease-in-out infinite;
 }
+
+
+/* ── Report error code block ── */
+.report-error-code {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 2px;
+}
+.report-error-status {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff3333;
+  letter-spacing: 2px;
+}
+.report-error-status-sep {
+  font-size: 11px;
+  color: #7A4400;
+}
+.report-error-status-desc {
+  font-size: 11px;
+  font-weight: bold;
+  color: #CC8800;
+  letter-spacing: 3px;
+}
+.report-error-msg {
+  color: #ff6666;
+  word-break: break-all;
+}
+
+/* ── Report error code block ── */
+.report-error-code {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 2px;
+}
+.report-error-status {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff3333;
+  letter-spacing: 2px;
+}
+.report-error-status-sep {
+  font-size: 11px;
+  color: #7A4400;
+}
+.report-error-status-desc {
+  font-size: 11px;
+  font-weight: bold;
+  color: #CC8800;
+  letter-spacing: 3px;
+}
+.report-error-msg {
+  color: #ff6666;
+  word-break: break-all;
+}

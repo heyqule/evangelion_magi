@@ -178,9 +178,8 @@ const updatePanelColor = (panelId, response) => {
     panel.setAttribute('fill', '#54C8DC'); // Blue for idle/reset
     return;
   }
-  // Grey for API errors OR empty responses
-  if (response === 'err' || response === 'empty') {
-    panel.setAttribute('fill', '#888888');
+  if (response === 'err') {
+    panel.setAttribute('fill', '#888888'); // Grey for error
     return;
   }
   const norm = normalizeResponse(response);
@@ -209,6 +208,24 @@ const updateStatusDisplay = (status, textColor, borderColor) => {
     el.style.color = textColor;
     el.style.borderColor = borderColor;
   }
+};
+
+// ── HTTP status code descriptions ──
+const httpStatusText = (code) => {
+  const map = {
+    400: 'BAD REQUEST',
+    401: 'UNAUTHORIZED',
+    402: 'PAYMENT REQUIRED',
+    403: 'FORBIDDEN',
+    404: 'NOT FOUND',
+    408: 'REQUEST TIMEOUT',
+    429: 'TOO MANY REQUESTS',
+    500: 'INTERNAL SERVER ERROR',
+    502: 'BAD GATEWAY',
+    503: 'SERVICE UNAVAILABLE',
+    504: 'GATEWAY TIMEOUT',
+  };
+  return map[code] || 'UNKNOWN ERROR';
 };
 
 const makeOpenRouterApiCall = () => {
@@ -275,9 +292,25 @@ const makeOpenRouterApiCall = () => {
   const getContent = (data) => data?.choices?.[0]?.message?.content || '';
   const getReasoning = (data) => data?.choices?.[0]?.message?.reasoning || '';
   const getError = (data) => {
-    if (data.__ok) return null;
-    const msg = data?.error?.message || data?.message || JSON.stringify(data);
-    return { status: data.__status, message: msg };
+    // HTTP-level error (non-2xx)
+    if (!data.__ok) {
+      const msg = data?.error?.message || data?.message || JSON.stringify(data);
+      return { status: data.__status, message: msg };
+    }
+    // Provider-level error embedded in a 200 response: choices[0].message.error
+    const providerErr = data?.choices?.[0]?.message?.error;
+    if (providerErr) {
+      const msg = providerErr.message || JSON.stringify(providerErr);
+      const code = providerErr.code ?? providerErr.status ?? data.__status;
+      return { status: code, message: msg };
+    }
+    // Top-level error object returned with 200 (some routers do this)
+    if (data?.error) {
+      const msg = data.error.message || JSON.stringify(data.error);
+      const code = data.error.code ?? data.error.status ?? data.__status;
+      return { status: code, message: msg };
+    }
+    return null;
   };
 
   const results = { top: null, left: null, right: null };
@@ -301,27 +334,22 @@ const makeOpenRouterApiCall = () => {
       const div = document.createElement('div');
       div.className = 'report-entry';
       if (e.error) {
+        // ── Error path: show code + description + message in separate rows ──
+        const statusDesc = httpStatusText(e.error.status);
         div.innerHTML = `
           <div class="report-entry-header">
             <span class="report-model-name">${e.model}</span>
             <span class="report-role">as ${e.role}</span>
             <span class="report-verdict no">ERR</span>
           </div>
-          <div class="report-section-label">ERROR</div>
-          <div class="report-text" style="color:#ff3333;">
-            <span style="color:#CC8800; font-weight:bold;">STATUS ${e.error.status}</span> — ${e.error.message}
+          <div class="report-section-label">ERROR CODE</div>
+          <div class="report-error-code">
+            <span class="report-error-status">${e.error.status}</span>
+            <span class="report-error-status-sep">//</span>
+            <span class="report-error-status-desc">${statusDesc}</span>
           </div>
-        `;
-      } else if (!e.content || !e.content.trim()) {
-        // Empty response — show as its own distinct case
-        div.innerHTML = `
-          <div class="report-entry-header">
-            <span class="report-model-name">${e.model}</span>
-            <span class="report-role">as ${e.role}</span>
-            <span class="report-verdict unk">EMPTY</span>
-          </div>
-          <div class="report-section-label">RESPONSE</div>
-          <div class="report-text" style="color:#888888;">(empty response)</div>
+          <div class="report-section-label">ERROR MESSAGE</div>
+          <div class="report-text report-error-msg">${e.error.message}</div>
         `;
       } else {
         const norm = normalizeResponse(e.content);
@@ -376,9 +404,7 @@ const makeOpenRouterApiCall = () => {
     results.top = content;
     reasoning.top = err ? '' : getReasoning(data);
     errors.top = err;
-    // Use 'empty' sentinel when no error but content is blank, to show grey instead of idle blue
-    const colorKey = err ? 'err' : (content.trim() ? content : 'empty');
-    updatePanelColor('panel-top', colorKey);
+    updatePanelColor('panel-top', err ? 'err' : content);
     checkAllDone();
   });
 
@@ -389,8 +415,7 @@ const makeOpenRouterApiCall = () => {
     results.left = content;
     reasoning.left = err ? '' : getReasoning(data);
     errors.left = err;
-    const colorKey = err ? 'err' : (content.trim() ? content : 'empty');
-    updatePanelColor('panel-bottom-left', colorKey);
+    updatePanelColor('panel-bottom-left', err ? 'err' : content);
     checkAllDone();
   });
 
@@ -401,8 +426,7 @@ const makeOpenRouterApiCall = () => {
     results.right = content;
     reasoning.right = err ? '' : getReasoning(data);
     errors.right = err;
-    const colorKey = err ? 'err' : (content.trim() ? content : 'empty');
-    updatePanelColor('panel-bottom-right', colorKey);
+    updatePanelColor('panel-bottom-right', err ? 'err' : content);
     checkAllDone();
   });
 };

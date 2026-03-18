@@ -172,6 +172,8 @@ const normalizeResponse = (response) => {
 const updatePanelColor = (panelId, response) => {
   const panel = document.getElementById(panelId);
   if (!panel) return;
+  // Always stop pulsing when an explicit color is being set
+  panel.classList.remove('panel-pulsing');
   if (response === '') {
     panel.setAttribute('fill', '#54C8DC'); // Blue for idle/reset
     return;
@@ -188,6 +190,15 @@ const updatePanelColor = (panelId, response) => {
   } else {
     panel.setAttribute('fill', '#FFAA00'); // Yellow for non-yes/no
   }
+};
+
+const startPanelPulse = () => {
+  ['panel-top', 'panel-bottom-left', 'panel-bottom-right'].forEach(id => {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    panel.removeAttribute('fill'); // Let CSS animation take over
+    panel.classList.add('panel-pulsing');
+  });
 };
 
 const updateStatusDisplay = (status, textColor, borderColor) => {
@@ -241,6 +252,7 @@ const makeOpenRouterApiCall = () => {
   updatePanelColor('panel-top', '');
   updatePanelColor('panel-bottom-left', '');
   updatePanelColor('panel-bottom-right', '');
+  startPanelPulse();
 
   const headers = { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' };
   const makeCall = (model, systemPrompt) => fetch('https://openrouter.ai/api/v1/chat/completions', {

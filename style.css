@@ -381,3 +381,12 @@ body {
   border-top: 1px solid #2A1A00;
   margin: 4px 0 18px;
 }
+
+/* ── Panel deliberation pulse ── */
+@keyframes panelPulse {
+  0%, 100% { fill: #54C8DC; }
+  50%       { fill: #FFAA00; }
+}
+.panel-pulsing {
+  animation: panelPulse 2s ease-in-out infinite;
+}

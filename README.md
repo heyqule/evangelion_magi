@@ -86,9 +86,6 @@ You need to enable "Enable free endpoints that may publish prompts" privacy opti
 - minimax/minimax-m2.5:free
   - https://openrouter.ai/minimax/minimax-m2.5:free
 
-#### Multi Vendor Magi
-The build in multi_vendor allow you to set your own API url, API key and model name.
-
 ### Screenshot
 ![main.png](main.png)
 
@@ -97,3 +94,12 @@ The build in multi_vendor allow you to set your own API url, API key and model n
 
 #### Report on full content and reasoning for each model.
 ![report.png](report.png)
+
+
+### Multi Vendor Magi
+The build in multi_vendor allow you to set your own API url, API key and model name for each panel.
+
+You can either run it with your local hosted build or with a provider.  The settings are saved in localstorage.
+
+#### Panel setup for each model in multiple vendor build.
+![multi_vendors.png](multi_vendors.png)

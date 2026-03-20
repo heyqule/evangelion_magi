@@ -97,7 +97,7 @@ You need to enable "Enable free endpoints that may publish prompts" privacy opti
 
 
 ### Multi Vendor Magi
-The build in multi_vendor allow you to set your own API url, API key and model name for each panel.
+The build in multi_vendor allow you to set your own API url, API key and model name for each panel.  It works with any OpenAI compatible API.
 
 You can either run it with your local hosted LLMs or with a provider.  The settings are saved in localstorage.
 

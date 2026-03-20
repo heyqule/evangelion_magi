@@ -279,7 +279,7 @@ const makeApiCalls = () => {
 - Add any additional content in new line.  These contents must match the language of user's question.
 `;
 
-  updateStatusDisplay('商議中', '#54C8DC', '#54C8DC');
+  updateStatusDisplay('審議中', '#54C8DC', '#54C8DC');
   updatePanelColor('panel-top', '');
   updatePanelColor('panel-bottom-left', '');
   updatePanelColor('panel-bottom-right', '');
@@ -396,9 +396,9 @@ const makeApiCalls = () => {
       else if (n.includes('no')) noCount++;
     });
     if (yesCount > noCount) {
-      updateStatusDisplay('同 意', '#00cc66', '#00cc66');
+      updateStatusDisplay('承 認', '#00cc66', '#00cc66');
     } else if (noCount > yesCount) {
-      updateStatusDisplay('否 定', '#ff3333', '#ff3333');
+      updateStatusDisplay('否 決', '#ff3333', '#ff3333');
     } else {
       magiAlert('Votes are equal. One or more AI did not return a Yes/No answer.');
       updateStatusDisplay('誤 差', '#666', '#666');

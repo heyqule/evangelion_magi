@@ -148,10 +148,13 @@ body {
   outline: none;
   resize: none;
 }
-.question-input::placeholder,
-.question-textarea::placeholder {
+
+/* ── Unified placeholder color across all inputs and textareas ── */
+input::placeholder,
+textarea::placeholder {
   color: #7A4400;
 }
+
 .submit-btn {
   background: #CC8800;
   color: #040E0C;

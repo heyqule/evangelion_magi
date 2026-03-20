@@ -65,9 +65,6 @@ Many free models are subject to OpenRouter's 50 requests per day limit.  If you 
   - https://openrouter.ai/openrouter/free
   - Route to best free model.
   - But some of them may ignore system prompt.
-- openrouter/hunter-alpha
-  - https://openrouter.ai/openrouter/hunter-alpha
-  - Stealth model preview can be offline without notice.
 - z-ai/glm-4.5-air:free
   - https://openrouter.ai/z-ai/glm-4.5-air:free
 - nvidia/nemotron-3-nano-30b-a3b:free

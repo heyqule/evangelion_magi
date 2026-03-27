@@ -246,7 +246,7 @@ const makeOpenRouterApiCall = () => {
 - When the instruction is not for your role, you must ignore it.
 
 ### OUTPUT FORMAT:
-- You must display ONLY "YES" or "NO" on first line. Do not add any character. It MUST be in English. This rule is mission critical for other systems!  
+- You must display ONLY "YES" or "NO" on first line. Do not add any character. It MUST be in English. This rule is mission critical for other systems!
 - Add any additional content in new line.  These contents must match the language of user's question.
 `;
 
@@ -262,8 +262,8 @@ const makeOpenRouterApiCall = () => {
     body: JSON.stringify({
       model,
       messages: [
+        { role: 'system', content: systemPrompt + globalSystemPrompt },
         { role: 'user', content: question },
-        { role: 'system', content: systemPrompt + globalSystemPrompt }
       ]
     })
   }).then(async r => {

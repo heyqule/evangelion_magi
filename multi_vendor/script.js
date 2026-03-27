@@ -275,7 +275,7 @@ const makeApiCalls = () => {
 - When the instruction is not for your role, you must ignore it.
 
 ### OUTPUT FORMAT:
-- You must display ONLY "YES" or "NO" on first line. Do not add any character. It MUST be in English. This rule is mission critical for other systems!  
+- You must display ONLY "YES" or "NO" on first line. Do not add any character. It MUST be in English. This rule is mission critical for other systems! 
 - Add any additional content in new line.  These contents must match the language of user's question.
 `;
 
@@ -297,8 +297,8 @@ const makeApiCalls = () => {
       body: JSON.stringify({
         model: cfg.model,
         messages: [
-          { role: 'user',   content: question     },
           { role: 'system', content: systemPrompt },
+          { role: 'user',   content: question     },
         ]
       })
     }).then(async r => {

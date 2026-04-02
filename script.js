@@ -1,11 +1,12 @@
 const support_models = [
   /* Default Models */
-  {name:"arcee-ai/trinity-large-preview:free",title: "Trinity · Large"},
+  {name:"qwen/qwen3.6-plus:free", title: "Qwen 3.6 · Plus"},
   {name:"stepfun/step-3.5-flash:free",title: "StepFun 3.5 · Flash"},
   {name:"nvidia/nemotron-3-super-120b-a12b:free",title: "Nemotron 3 · 120B"},
   /* Official hosted model */
   {name:"openrouter/free",title: "Openrouter · Free"},
   {name:"z-ai/glm-4.5-air:free",title: "GLM 4.5 · Air"},
+  {name:"minimax/minimax-m2.5:free", title: "Minimax · M2.5"},
   {name:"nvidia/nemotron-3-nano-30b-a3b:free",title: "Nemotron 3 · Nano"},
   {name:"arcee-ai/trinity-mini:free",title: "Trinity · Mini"},
   /* OpenInference hosted */
